@@ -123,7 +123,8 @@
       <p>Discount On MRP: -₹<span id="discount">0</span></p>
       <p>Delivery Fee: ₹49</p>
       <p>Total Amount: ₹<span id="total-amount">0</span></p>
-      <button>Checkout</button>
+      <p>Points Earned: <span id="points-earned">0</span></p>
+      <button id="checkout-btn">Checkout</button>
     </section>
 
     <section class="add-ons">
@@ -175,7 +176,7 @@
         displayCartItems();
       }
 
-      // Function to update total price
+      // Function to update total price and calculate points
       function updateTotalPrice() {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         const totalMRP = cart.reduce(
@@ -184,6 +185,7 @@
         );
         const discount = totalMRP * 0.05; // Assuming 5% discount
         const totalAmount = totalMRP - discount + 49; // Adding delivery fee
+        const pointsEarned = Math.floor(totalAmount / 100); // 1 point for every 100 rupees
 
         document.getElementById("total-mrp").textContent = totalMRP.toFixed(2);
         document.getElementById("discount").textContent = discount.toFixed(2);
@@ -191,10 +193,44 @@
           totalAmount.toFixed(2);
         document.getElementById("total-savings").textContent =
           discount.toFixed(2);
+        document.getElementById("points-earned").textContent = pointsEarned;
       }
 
+      // Function to handle checkout
+      function handleCheckout() {
+        const totalAmount = parseFloat(
+          document.getElementById("total-amount").textContent
+        );
+        const pointsEarned = Math.floor(totalAmount / 100);
+
+        // Get current rewards from localStorage
+        let currentRewards = parseInt(
+          localStorage.getItem("rewardPoints") || "0"
+        );
+
+        // Add new points
+        currentRewards += pointsEarned;
+
+        // Save updated rewards to localStorage
+        localStorage.setItem("rewardPoints", currentRewards.toString());
+
+        // Clear the cart
+        localStorage.removeItem("cart");
+
+        // Redirect to the rewards page
+        window.location.href = "rewards.html";
+      }
+
+      // Add event listener to checkout button
+      document
+        .getElementById("checkout-btn")
+        .addEventListener("click", handleCheckout);
+
       // Call the function on page load
-      window.onload = displayCartItems;
+      window.onload = function () {
+        displayCartItems();
+        updateTotalPrice();
+      };
     </script>
   </body>
 </html>
