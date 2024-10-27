@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      header {
+        background-color: #f0f0f0;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .savings {
+        background-color: #dff0d8;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .delivery-info,
+      .cart-items,
+      .offers,
+      .price-details,
+      .add-ons {
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+
+      .cart-items .item {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+
+      .cart-items img {
+        width: 100px;
+        height: auto;
+      }
+
+      .cart-items .details {
+        flex-grow: 1;
+      }
+
+      .cart-items .remove-btn {
+        background-color: #ff4136;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      .price-details {
+        text-align: right;
+      }
+
+      button {
+        background-color: #ff9800;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .cart-item {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+      }
+
+      .cart-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="savings">
+        Your total Savings ₹ <span id="total-savings">0</span>
+      </div>
+      <nav>
+        <ul>
+          <li>Cart</li>
+          <li>Address</li>
+          <li>Payment</li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="delivery-info">
+      <p>Deliver To 400017 MUMBAI</p>
+      <button>CHECK</button>
+    </section>
+
+    <section class="cart-items">
+      <!-- Cart items will be dynamically added here -->
+    </section>
+
+    <section class="offers">
+      <h4>Discover delights</h4>
+      <button>Claim</button>
+    </section>
+
+    <section class="price-details">
+      <p>Total MRP: ₹<span id="total-mrp">0</span></p>
+      <p>Discount On MRP: -₹<span id="discount">0</span></p>
+      <p>Delivery Fee: ₹49</p>
+      <p>Total Amount: ₹<span id="total-amount">0</span></p>
+      <button>Checkout</button>
+    </section>
+
+    <section class="add-ons">
+      <h4>Last minute add ons</h4>
+      <div class="add-on-item">
+        <img src="addon-image.jpg" alt="Add-on Image" />
+        <p>Henlo Chicken & Vegetable...</p>
+        <p>₹120</p>
+        <button>Add to cart</button>
+      </div>
+    </section>
+
+    <script>
+      // Function to display cart items
+      function displayCartItems() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartItemsContainer = document.querySelector(".cart-items");
+
+        cartItemsContainer.innerHTML = ""; // Clear existing items
+
+        cart.forEach((item, index) => {
+          const itemElement = document.createElement("div");
+          itemElement.classList.add("item");
+          itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="details">
+              <h3>${item.name}</h3>
+              <p>Price: ₹${item.price}</p>
+            </div>
+            <button class="remove-btn" data-index="${index}">Remove</button>
+          `;
+          cartItemsContainer.appendChild(itemElement);
+        });
+
+        // Add event listeners for remove buttons
+        document.querySelectorAll(".remove-btn").forEach((button) => {
+          button.addEventListener("click", removeCartItem);
+        });
+
+        updateTotalPrice();
+      }
+
+      // Function to remove item from cart
+      function removeCartItem(event) {
+        const index = event.target.getAttribute("data-index");
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCartItems();
+      }
+
+      // Function to update total price
+      function updateTotalPrice() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const totalMRP = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price.replace(/,/g, "")),
+          0
+        );
+        const discount = totalMRP * 0.05; // Assuming 5% discount
+        const totalAmount = totalMRP - discount + 49; // Adding delivery fee
+
+        document.getElementById("total-mrp").textContent = totalMRP.toFixed(2);
+        document.getElementById("discount").textContent = discount.toFixed(2);
+        document.getElementById("total-amount").textContent =
+          totalAmount.toFixed(2);
+        document.getElementById("total-savings").textContent =
+          discount.toFixed(2);
+      }
+
+      // Call the function on page load
+      window.onload = displayCartItems;
+    </script>
+  </body>
+</html>

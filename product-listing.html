@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Kitter - Product Listing</title>
-    <meta name="title" content="Kitter - Product Listing" />
+    <title>Fudge - Product Listing</title>
+    <meta name="title" content="Fudge - Product Listing" />
     <meta
       name="description"
       content="Browse our wide selection of pet products"
@@ -47,7 +47,7 @@
           ></ion-icon>
         </button>
 
-        <a href="index.html" class="logo">Kitter</a>
+        <a href="index.html" class="logo">Fudge</a>
 
         <nav class="navbar" data-navbar>
           <ul class="navbar-list">
@@ -133,8 +133,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -157,6 +158,7 @@
                       <a href="#" class="card-title">Chicken Chunks In Gravy</a>
                     </h3>
                     <data class="card-price" value="5,472">₹5,472</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -185,8 +187,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -209,6 +212,7 @@
                       <a href="#" class="card-title">Drools Dog Dry Food</a>
                     </h3>
                     <data class="card-price" value="2,635">₹2,635</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -237,8 +241,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -264,6 +269,7 @@
                       >
                     </h3>
                     <data class="card-price" value="899">₹899</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -292,8 +298,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -319,6 +326,7 @@
                       >
                     </h3>
                     <data class="card-price" value="399">₹399</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -347,8 +355,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -371,6 +380,7 @@
                       <a href="#" class="card-title">Orange Toy For Pets</a>
                     </h3>
                     <data class="card-price" value="1300">₹1300</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -399,8 +409,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -426,6 +437,7 @@
                       >
                     </h3>
                     <data class="card-price" value="1697">₹1,697</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -454,8 +466,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -481,6 +494,7 @@
                       >
                     </h3>
                     <data class="card-price" value="2580">₹2,850</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -509,8 +523,9 @@
                     />
                     <button
                       class="card-action-btn"
-                      aria-label="add to card"
-                      title="Add To Card"
+                      aria-label="add to cart"
+                      title="Add To Cart"
+                      onclick="addToCartAndRedirect(this)"
                     >
                       <ion-icon
                         name="bag-add-outline"
@@ -533,6 +548,7 @@
                       <a href="#" class="card-title">Etiam commodo leo sed</a>
                     </h3>
                     <data class="card-price" value="55">$55.00</data>
+                    <!-- Small cart button removed -->
                   </div>
                 </div>
               </li>
@@ -600,5 +616,33 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+
+    <script>
+      // Function to add item to cart and redirect
+      function addToCartAndRedirect(button) {
+        const productCard = button.closest(".product-card");
+        const product = {
+          name: productCard.querySelector(".card-title").textContent,
+          price: productCard.querySelector(".card-price").getAttribute("value"),
+          image: productCard.querySelector(".img-cover.default").src,
+        };
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(product);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Redirect to cart page
+        window.location.href = "cart.html";
+      }
+
+      // Update cart count on page load
+      function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.querySelector(".btn-badge").textContent = cart.length;
+      }
+
+      // Call updateCartCount on page load
+      window.onload = updateCartCount;
+    </script>
   </body>
 </html>
