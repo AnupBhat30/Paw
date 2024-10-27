@@ -1164,5 +1164,32 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script>
+      // Function to add item to cart and redirect
+      function addToCartAndRedirect(button) {
+        const productCard = button.closest(".product-card");
+        const product = {
+          name: productCard.querySelector(".card-title").textContent,
+          price: productCard.querySelector(".card-price").getAttribute("value"),
+          image: productCard.querySelector(".img-cover.default").src,
+        };
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(product);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Redirect to cart page
+        window.location.href = "cart.html";
+      }
+
+      // Update cart count on page load
+      function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.querySelector(".btn-badge").textContent = cart.length;
+      }
+
+      // Call updateCartCount on page load
+      window.onload = updateCartCount;
+    </script>
   </body>
 </html>
