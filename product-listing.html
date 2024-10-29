@@ -21,6 +21,57 @@
       href="https://fonts.googleapis.com/css2?family=Bangers&family=Carter+One&family=Nunito+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+        /* Replace the existing header styles with these */
+        .header {
+            background-color: var(--portland-orange) !important;
+            position: static; /* Changed from fixed to static */
+            width: 100%;
+            padding-block: 20px;
+            z-index: 4;
+        }
+
+        /* Add margin to main content to prevent overlap */
+        main {
+            margin-top: 0; /* Remove any existing top margin */
+        }
+
+        /* Rest of your existing styles remain unchanged */
+        .header.active {
+            background-color: var(--portland-orange) !important;
+        }
+
+        .navbar-link {
+            color: var(--white) !important;
+        }
+
+        .navbar-link:hover {
+            color: var(--eerie-black-1) !important;
+        }
+
+        .logo {
+            color: var(--white) !important;
+        }
+
+        .action-btn {
+            color: var(--white) !important;
+        }
+
+        .action-btn:hover {
+            color: var(--eerie-black-1) !important;
+        }
+
+        .navbar-action-btn {
+            color: var(--white) !important;
+            border: 1px solid var(--white) !important;
+        }
+
+        .navbar-action-btn:hover {
+            background-color: var(--white) !important;
+            color: var(--portland-orange) !important;
+        }
+    </style>
   </head>
 
   <body id="top">
@@ -62,7 +113,7 @@
             </li>
 
             <li class="navbar-item">
-              <a href="#" class="navbar-link" data-nav-link>Collections</a>
+              <a href="adopt.php" class="navbar-link" data-nav-link>Adopt me</a>
             </li>
 
             <li class="navbar-item">
@@ -127,7 +178,7 @@
                       alt="Chicken Chunks"
                       class="img-cover default"
                     />
-                    <img
+                    <img onclick="window.location.href='order.html'"
                       src="./assets/images/cchunks1.png"
                       width="360"
                       height="360"

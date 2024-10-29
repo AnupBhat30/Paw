@@ -1,13 +1,47 @@
+<?php
+session_start();
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "petstore";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = $conn->real_escape_string($_POST['password']);
+
+    $sql = "SELECT CustomerID, email, password FROM customer WHERE email = '$email' AND password = '$password'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $_SESSION['CustomerID'] = $row['CustomerID'];
+        header("Location: index.html"); // Redirect to dashboard or home page
+        exit();
+    } else {
+        $error = "Invalid email or password";
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join Fudge - Pet Lovers Community</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <title>Login to Fudge - Pet Lovers Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       * {
         margin: 0;
@@ -191,70 +225,44 @@
         }
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="wrapper">
-      <div class="quote-wrapper">
-        <div class="quote-content">
-          <blockquote>
-            "A pet is the only thing on earth that loves you more than you love
-            yourself."
-          </blockquote>
-          <p class="author">- Josh Billings</p>
+        <div class="quote-wrapper">
+            <div class="quote-content">
+                <blockquote>
+                    "The love of a dog is a pure thing. He gives you a trust which is total. You must not betray it."
+                </blockquote>
+                <p class="author">- Michel Houellebecq</p>
+            </div>
         </div>
-      </div>
 
-      <div class="form-wrapper">
-        <h1 class="form-title">Join Fudge</h1>
-        <p class="form-subtitle">Create your pet lover account</p>
+        <div class="form-wrapper">
+            <h1 class="form-title">Welcome Back</h1>
+            <p class="form-subtitle">Log in to your Fudge account</p>
 
-        <form action="/register" method="POST">
-          <div class="name-group">
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="firstName" required />
-            </div>
+            <?php if ($error): ?>
+                <p style="color: red; text-align: center;"><?php echo $error; ?></p>
+            <?php endif; ?>
 
-            <div class="form-group">
-              <label for="minit">Middle Initial</label>
-              <input type="text" id="minit" name="minit" maxlength="1" />
-            </div>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
 
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
-          </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
 
-          <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
-          </div>
+                <button type="submit" class="submit-btn">Log in</button>
+            </form>
 
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-
-          <div class="terms-group">
-            <input type="checkbox" id="terms" required />
-            <label for="terms">
-              I agree to the <a href="#">Terms & Conditions</a>
-            </label>
-          </div>
-
-          <button type="submit" class="submit-btn">Create account</button>
-        </form>
-
-        <p class="login-link">
-          Already have an account? <a href="#">Log in</a>
-        </p>
-      </div>
+            <p class="login-link">
+                Don't have an account? <a href="signup.php">Sign up</a>
+            </p>
+        </div>
     </div>
-  </body>
+</body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join Fudge - Pet Lovers Community</title>
+    <title>Login to Fudge - Pet Lovers Community</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -197,40 +197,18 @@
       <div class="quote-wrapper">
         <div class="quote-content">
           <blockquote>
-            "A pet is the only thing on earth that loves you more than you love
-            yourself."
+            "Until one has loved an animal, a part of one's soul remains
+            unawakened."
           </blockquote>
-          <p class="author">- Josh Billings</p>
+          <p class="author">- Anatole France</p>
         </div>
       </div>
 
       <div class="form-wrapper">
-        <h1 class="form-title">Join Fudge</h1>
-        <p class="form-subtitle">Create your pet lover account</p>
+        <h1 class="form-title">Welcome Back</h1>
+        <p class="form-subtitle">Login to your Fudge account</p>
 
-        <form action="/register" method="POST">
-          <div class="name-group">
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="firstName" required />
-            </div>
-
-            <div class="form-group">
-              <label for="minit">Middle Initial</label>
-              <input type="text" id="minit" name="minit" maxlength="1" />
-            </div>
-
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
-          </div>
-
+        <form action="/login" method="POST">
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required />
@@ -242,17 +220,18 @@
           </div>
 
           <div class="terms-group">
-            <input type="checkbox" id="terms" required />
-            <label for="terms">
-              I agree to the <a href="#">Terms & Conditions</a>
-            </label>
+            <input type="checkbox" id="remember" />
+            <label for="remember">Remember me</label>
           </div>
 
-          <button type="submit" class="submit-btn">Create account</button>
+          <button type="submit" class="submit-btn">Log in</button>
         </form>
 
         <p class="login-link">
-          Already have an account? <a href="#">Log in</a>
+          Don't have an account? <a href="signup.html">Sign up</a>
+        </p>
+        <p class="login-link">
+          <a href="#">Forgot your password?</a>
         </p>
       </div>
     </div>

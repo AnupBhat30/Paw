@@ -11,44 +11,90 @@
       }
 
       header {
-        background-color: #f0f0f0;
-        padding: 10px;
-        text-align: center;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
       }
 
       .savings {
-        background-color: #dff0d8;
-        padding: 10px;
-        margin-bottom: 10px;
+        background: linear-gradient(
+          135deg,
+          #ff6b4a,
+          #ff8066
+        ); /* New gradient using the specified orange */
+        color: white;
+        padding: 16px 24px;
+        border-radius: 16px;
+        margin: 0 auto 20px;
+        font-weight: 500;
+        max-width: 1000px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(255, 107, 74, 0.2); /* Updated shadow color */
+      }
+
+      .savings span {
+        font-size: 1.2em;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 6px 12px;
+        border-radius: 8px;
+        margin-left: 10px;
       }
 
       nav ul {
         list-style: none;
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 40px;
+        padding: 10px 0;
+      }
+
+      nav ul li {
+        position: relative;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      nav ul li:not(:last-child)::after {
+        content: "→";
+        position: absolute;
+        right: -30px;
+        color: #666;
       }
 
       .delivery-info,
       .cart-items,
-      .offers,
-      .price-details,
-      .add-ons {
-        margin: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
+      .price-details {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+        margin: 20px auto;
+        max-width: 1000px;
       }
 
       .cart-items .item {
+        background: #f5f5f7; /* Apple's light gray */
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        transition: all 0.2s;
         display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
         align-items: center;
+        gap: 20px;
+      }
+
+      .cart-items .item:hover {
+        transform: translateY(-2px);
       }
 
       .cart-items img {
-        width: 100px;
-        height: auto;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
       }
 
       .cart-items .details {
@@ -56,23 +102,42 @@
       }
 
       .cart-items .remove-btn {
-        background-color: #ff4136;
+        background-color: #ff3b30; /* Apple's red */
         color: white;
         border: none;
-        padding: 5px 10px;
+        padding: 8px 16px;
+        border-radius: 8px;
         cursor: pointer;
+      }
+
+      .cart-items .remove-btn:hover {
+        background-color: #ff453a;
       }
 
       .price-details {
-        text-align: right;
+        background: #f8f9fa;
+      }
+
+      .price-details p {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        padding: 5px 0;
       }
 
       button {
-        background-color: #ff9800;
-        color: white;
+        background-color: #ff6b4a; /* Updated primary orange */
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 500;
+        transition: all 0.2s;
         border: none;
-        padding: 10px;
-        cursor: pointer;
+        color: white;
+      }
+
+      button:hover {
+        background-color: #ff8066; /* Lighter shade for hover */
+        transform: scale(1.02);
       }
 
       .cart-item {
@@ -88,12 +153,24 @@
         object-fit: cover;
         margin-right: 20px;
       }
+
+      #checkout-btn {
+        width: 100%;
+        margin-top: 20px;
+        font-size: 1.1em;
+        background-color: #ff6b4a; /* Updated primary orange */
+      }
+
+      #checkout-btn:hover {
+        background-color: #ff8066; /* Lighter shade for hover */
+      }
     </style>
   </head>
   <body>
     <header>
       <div class="savings">
-        Your total Savings ₹ <span id="total-savings">0</span>
+        <div>Your Total Savings</div>
+        <span>₹<span id="total-savings">0</span></span>
       </div>
       <nav>
         <ul>
@@ -113,11 +190,6 @@
       <!-- Cart items will be dynamically added here -->
     </section>
 
-    <section class="offers">
-      <h4>Discover delights</h4>
-      <button>Claim</button>
-    </section>
-
     <section class="price-details">
       <p>Total MRP: ₹<span id="total-mrp">0</span></p>
       <p>Discount On MRP: -₹<span id="discount">0</span></p>
@@ -125,16 +197,6 @@
       <p>Total Amount: ₹<span id="total-amount">0</span></p>
       <p>Points Earned: <span id="points-earned">0</span></p>
       <button id="checkout-btn">Checkout</button>
-    </section>
-
-    <section class="add-ons">
-      <h4>Last minute add ons</h4>
-      <div class="add-on-item">
-        <img src="addon-image.jpg" alt="Add-on Image" />
-        <p>Henlo Chicken & Vegetable...</p>
-        <p>₹120</p>
-        <button>Add to cart</button>
-      </div>
     </section>
 
     <script>
@@ -218,7 +280,7 @@
         localStorage.removeItem("cart");
 
         // Redirect to the rewards page
-        window.location.href = "rewards.html";
+        window.location.href = "rewards.php";
       }
 
       // Add event listener to checkout button
